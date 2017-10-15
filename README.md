@@ -1,1 +1,1 @@
-# Skládka
+# Skladka
