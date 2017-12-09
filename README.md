@@ -1,2 +1,2 @@
 # Skladka
-s  h
+s h
