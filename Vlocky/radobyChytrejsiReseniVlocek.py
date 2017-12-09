@@ -10,6 +10,22 @@ bilaOcasu1 = [128,128,128]
 bilaOcasu2 = [68,68,68]
 pocetVlocek = 0
 
+def zkontrolujY():
+    global l
+    global u
+    global p
+    global k
+    global o
+    global n
+    if l==10:
+        l = random.randint(0,3)
+        k = random.randint(0,7)
+    if u==10:
+        u = random.randint(0,3)
+        o = random.randint(0,7)
+    if p==10:
+        p = random.randint(0,3)
+        n = random.randint(0,7)
 
 def kresliVlocku(x,y):
     if y > -1 and y < 8:
@@ -20,33 +36,25 @@ def kresliVlocku(x,y):
         sense.set_pixel(x, y - 2, bilaOcasu2)
     if y > 2 and y < 11:
         sense.set_pixel(x, y - 3, cerna)
-        
-def vlocka(sloupec, y):
-    kresliVlocku(sloupec,y)
-    
-    if y==10:
-        sloupec = random.randint(0,7)
-        y = random.randint(0,3)
-        
-    y= y+1
-    return [sloupec, y]
 	
 sense.clear()
 sleep(1)
 
-start1 = random.randint(0,3)
-start2 = random.randint(0,3)
-start3 = random.randint(0,3)
-sloupec1 = random.randint(0,7)
-sloupec2 = random.randint(0,7)
-sloupec3 = random.randint(0,7)
+l = random.randint(0,3)
+u = random.randint(0,3)
+p = random.randint(0,3)
+k = random.randint(0,7)
+o = random.randint(0,7)
+n = random.randint(0,7)
 
 while True:
-    v1 = vlocka(sloupec1, start1)
-    sloupec1 = v1[0]
-    start1 = v1[1]
-    
-    
+    kresliVlocku(k,l)
+    kresliVlocku(o,u)
+    kresliVlocku(n,p)
+    zkontrolujY()
+    l= l+1
+    u= u+1
+    p= p+1 
     sleep(0.5)
 #while True:
     #sloupec = random.randint(0,7)
