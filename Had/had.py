@@ -7,10 +7,10 @@ barvaHlavy = [250,0,0]
 barvaOcasu = [100,100,100]
 ToJeTma = [0,0,0]
 smer = "up"
-h = [randint(3,7),randint(3,7)]
-o1 = [h[0],h[1] -1]
-o2 = [h[0],h[1] -2]
-t = [h[0],h[1] -3]
+h = [4,4]
+o1 = [h[0],h[1] +1]
+o2 = [h[0],h[1] +2]
+t = [h[0],h[1] +3]
 
 def rozsvitHada(hlava,ocas1,ocas2,tma):
     #print (hlava[0], hlava[1], tma[0], tma[1])
@@ -22,7 +22,14 @@ def rozsvitHada(hlava,ocas1,ocas2,tma):
 def zjistiSmer(direction):
     for event in sense.stick.get_events():
         if(event.direction != "middle" and event.action == "pressed"):
-            direction = event.direction
+            if event.direction == "left" and direction != "right":
+                direction = event.direction
+            elif event.direction == "right" and direction != "left":
+                direction = event.direction
+            elif event.direction == "down" and direction != "up":
+                direction = event.direction
+            elif event.direction == "up" and direction != "down":
+                direction = event.direction
     return direction
 
 def dejNovouPozici(direction,position):
