@@ -4,7 +4,7 @@ import random
 
 sense = SenseHat()
 vyska = 3
-bila = [255,255,255]
+bila = [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 cerna = [0, 0, 0]
 bilaOcasu1 = [128,128,128]
 bilaOcasu2 = [68,68,68]
