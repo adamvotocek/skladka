@@ -5,7 +5,7 @@ from random import randint
 sense = SenseHat()
 barvaHlavy = [250,0,0]
 barvaOcasu = [100,100,100]
-ToJeTma = [0,0,0]
+toJeTma = [0,0,0]
 barvaPotravy = [randint(0,250),randint(0,250),randint(0,250)]
 smer = "up"
 p = []
@@ -14,13 +14,18 @@ h = [4,4]
 o1 = [h[0],h[1] +1]
 o2 = [h[0],h[1] +2]
 t = [h[0],h[1] +3]
+had = [h,o1,o2,t]
 
-def rozsvitHada(hlava,ocas1,ocas2,tma):
-    #print (hlava[0], hlava[1], tma[0], tma[1])
-    sense.set_pixel(hlava[0],hlava[1],barvaHlavy)
-    sense.set_pixel(ocas1[0],ocas1[1],barvaOcasu)
-    sense.set_pixel(ocas2[0],ocas2[1],barvaOcasu)
-    sense.set_pixel(tma[0],tma[1],ToJeTma)
+def rozsvitHada(had):
+    for i in range(len(had)):
+        barva = barvaOcasu
+        if i == 0:
+            barva = barvaHlavy
+        if i == len(had) - 1:
+            barva = toJeTma
+        pozice = had[i]
+        sense.set_pixel(pozice[0],pozice[1],barva)
+
 
 def muzuZmenitSmer(novy, stary):
     return (novy == "left" and stary != "right") or (novy == "right" and stary != "left") or (novy == "down" and stary != "up") or (novy == "up" and stary != "down")
@@ -74,14 +79,14 @@ sleep(1)
 
 while True:
     smer = zjistiSmer(smer)
-    rozsvitHada(h,o1,o2,t)
+    rozsvitHada(had)
     
    
-    if (not p) or (h == p):
-        if h == p:
-            skore = skore + 1
-        print ("POTRABA")
-        p = vytvorPotravu(h,o1,o2,t,p)
+    #if (not p) or (h == p):
+    #    if h == p:
+    #        skore = skore + 1
+    #    print ("POTRAVA")
+    #    p = vytvorPotravu(h,o1,o2,t,p)
         
     # Posun body hada
     t[0] = o2[0]
@@ -92,6 +97,6 @@ while True:
     o1[1] = h[1]        
     h = dejNovouPozici(smer,h)
     
-    print (skore, p[0],p[1])
+    #print (skore, p[0],p[1])
     #print (h[0],h[1])
     sleep(0.5)

@@ -4,7 +4,7 @@ from random import randint
 
 sense = SenseHat()
 barvaHlavy = [250,0,0]
-barvaOcasu = [100,100,100]
+barvaOcasu = [randint(0,250),randint(0,250),randint(0,250)]#[100,100,100]
 ToJeTma = [0,0,0]
 barvaPotravy = [randint(0,250),randint(0,250),randint(0,250)]
 smer = "up"
@@ -80,7 +80,7 @@ while True:
     if (not p) or (h == p):
         if h == p:
             skore = skore + 1
-        print ("POTRABA")
+        print ("POTRAVA")
         p = vytvorPotravu(h,o1,o2,t,p)
         
     # Posun body hada
