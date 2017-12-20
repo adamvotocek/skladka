@@ -87,15 +87,18 @@ while True:
     #        skore = skore + 1
     #    print ("POTRAVA")
     #    p = vytvorPotravu(h,o1,o2,t,p)
-        
+    
     # Posun body hada
-    t[0] = o2[0]
-    t[1] = o2[1]
-    o2[0] = o1[0]
-    o2[1] = o1[1]
-    o1[0] = h[0]
-    o1[1] = h[1]        
-    h = dejNovouPozici(smer,h)
+    for i in reversed(range(len(had))):        
+        if i != 0:
+            had[i][0] = had[i - 1][0]
+            had[i][1] = had[i - 1][1]
+        else:
+           had[i] = dejNovouPozici(smer,had[i])
+           
+                
+    # pridat do pole https://docs.python.org/2/tutorial/datastructures.html
+    # odstranit comm.
     
     #print (skore, p[0],p[1])
     #print (h[0],h[1])
