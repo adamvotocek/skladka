@@ -33,23 +33,20 @@ def muzuZmenitSmer(novy, stary):
 def zjistiSmer(direction):
     for event in sense.stick.get_events():
         if(event.direction != "middle" and event.action == "pressed"):
-            #if event.direction == "left" and direction != "right":
-            #    direction = event.direction
-            #elif event.direction == "right" and direction != "left":
-            #    direction = event.direction
-            #elif event.direction == "down" and direction != "up":
-            #    direction = event.direction
-            #elif event.direction == "up" and direction != "down":
-            #    direction = event.direction
             if (muzuZmenitSmer(event.direction, direction)):
                     direction = event.direction      
     return direction
 
-def vytvorPotravu(hlava,ocas1,ocas2,tma,potrava):
+def vytvorPotravu(had,potrava):
     while True:
+        prepinac = True
+        barvaPotravy = [randint(0,250),randint(0,250),randint(0,250)]
         potrava = [randint(0,7),randint(0,7)]
-        if potrava != hlava or potrava != ocas1 or potrava != ocas2 or potrava != t:
-            barvaPotravy = [randint(0,250),randint(0,250),randint(0,250)]
+        for i in reversed(range(len(had))):
+            if potrava == had[i]:
+                prepinac = False
+                
+        if prepinac:
             sense.set_pixel(potrava[0],potrava[1],barvaPotravy)
             return potrava
 
@@ -81,12 +78,11 @@ while True:
     smer = zjistiSmer(smer)
     rozsvitHada(had)
     
-   
-    #if (not p) or (h == p):
-    #    if h == p:
-    #        skore = skore + 1
-    #    print ("POTRAVA")
-    #    p = vytvorPotravu(h,o1,o2,t,p)
+    if (not p) or (had[0] == p):
+        if had[0] == p:
+            skore = skore + 1
+        print ("POTRAVA")
+        p = vytvorPotravu(had,p)
     
     # Posun body hada
     for i in reversed(range(len(had))):        
@@ -95,11 +91,9 @@ while True:
             had[i][1] = had[i - 1][1]
         else:
            had[i] = dejNovouPozici(smer,had[i])
-           
-                
+             
     # pridat do pole https://docs.python.org/2/tutorial/datastructures.html
-    # odstranit comm.
     
-    #print (skore, p[0],p[1])
-    #print (h[0],h[1])
+    print (skore)
+    print (had[0][0],had[0][1])
     sleep(0.5)
