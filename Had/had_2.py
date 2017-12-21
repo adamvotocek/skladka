@@ -7,14 +7,18 @@ barvaHlavy = [250,0,0]
 barvaOcasu = [100,100,100]
 toJeTma = [0,0,0]
 barvaPotravy = [randint(0,250),randint(0,250),randint(0,250)]
+hadHaduje = True
 smer = "up"
+snedenaPotrava = 0
 p = []
 skore = 0
-h = [4,4]
-o1 = [h[0],h[1] +1]
-o2 = [h[0],h[1] +2]
-t = [h[0],h[1] +3]
-had = [h,o1,o2,t]
+had = [[3,1],[0,0],[0,0],[0,0]]
+had[1][0] = had[0][0]
+had[1][1] = had[0][1] +1
+had[2][0] = had[1][0]
+had[2][1] = had[1][1] +2
+had[3][0] = had[2][0]
+had[3][1] = had[2][1] +3
 
 def rozsvitHada(had):
     for i in range(len(had)):
@@ -23,7 +27,8 @@ def rozsvitHada(had):
             barva = barvaHlavy
         if i == len(had) - 1:
             barva = toJeTma
-        pozice = had[i]
+        pozice = had[i]                                                                 
+        
         sense.set_pixel(pozice[0],pozice[1],barva)
 
 
@@ -44,8 +49,7 @@ def vytvorPotravu(had,potrava):
         potrava = [randint(0,7),randint(0,7)]
         for i in reversed(range(len(had))):
             if potrava == had[i]:
-                prepinac = False
-                
+                prepinac = False  
         if prepinac:
             sense.set_pixel(potrava[0],potrava[1],barvaPotravy)
             return potrava
@@ -76,24 +80,40 @@ sleep(1)
 
 while True:
     smer = zjistiSmer(smer)
-    rozsvitHada(had)
+    if hadHaduje == False:
+        for event in sense.stick.get_events():
+            if(event.direction == "middle" and event.action == "pressed"):
+                hadHaduje = True
+                snedenaPotrava = 0
+                skore = 0
+                had = [[3,1],[0,0],[0,0],[0,0]]
+                had[1][0] = had[0][0]
+                had[1][1] = had[0][1] +1
+                had[2][0] = had[1][0]
+                had[2][1] = had[1][1] +2
+                had[3][0] = had[2][0]
+                had[3][1] = had[2][1] +3
     
-    if (not p) or (had[0] == p):
-        if had[0] == p:
-            skore = skore + 1
-        print ("POTRAVA")
-        p = vytvorPotravu(had,p)
-    
-    # Posun body hada
-    for i in reversed(range(len(had))):        
-        if i != 0:
-            had[i][0] = had[i - 1][0]
-            had[i][1] = had[i - 1][1]
-        else:
-           had[i] = dejNovouPozici(smer,had[i])
+    if hadHaduje == True:
+        rozsvitHada(had)
+        for i in reversed(range(len(had))):
+            for n in reversed(range(len(had))):
+                if had[i] == had [n]:
+                    hadHaduje = False
+        
+        if (not p) or (had[0] == p):
+            if had[0] == p:
+                had.insert(len(had) -2, [had[len(had) -2][0],had[len(had) -2][1]])
+                skore = skore + 1
+                print (skore)
+            p = vytvorPotravu(had,p)
+        # Posun body hada
+        for i in reversed(range(len(had))):        
+          if i != 0:
+              had[i][0] = had[i - 1][0]
+              had[i][1] = had[i - 1][1]
+          else:
+              had[i] = dejNovouPozici(smer,had[i])
              
-    # pridat do pole https://docs.python.org/2/tutorial/datastructures.html
-    
-    print (skore)
-    print (had[0][0],had[0][1])
-    sleep(0.5)
+    #print (had[0][0],had[0][1])
+    sleep(0.4)
