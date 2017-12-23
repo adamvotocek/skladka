@@ -7,8 +7,8 @@ O = [0,0,0]
 N = [0,128,0]
 E = [0,0,128]
 M = [128,0,0]
-barvaHlavy = [250,0,0]
-barvaOcasu = [100,100,100]
+barvaHlavy = [randint(0,250),randint(0,250),randint(0,250)]
+barvaOcasu = [randint(0,128),randint(0,128),randint(0,128)]
 barvaPotravy = [randint(0,250),randint(0,250),randint(0,250)]
 hadHaduje = True
 smer = "up"
@@ -18,6 +18,15 @@ skore = 0
 had = [[4,4],[4,5],[4,6],[4,7]]
 
 def rozsvitHada(had):
+    barvaHlavy = [randint(0,250),randint(0,250),randint(0,250)]
+    barvaOcasu = [randint(0,128),randint(0,128),randint(0,128)]
+    if barvaHlavy[0] + barvaHlavy[1] + barvaHlavy[2] < 50:
+        while barvaHlavy[0] < 50 or barvaHlavy[1] < 50 or barvaHlavy[2] < 50:
+            barvaHlavy = [randint(0,250),randint(0,250),randint(0,250)]
+    if barvaOcasu[0] + barvaOcasu[1] + barvaOcasu[2] < 50:
+        while barvaOcasu[0] < 50 or barvaOcasu[1] < 50 or barvaOcasu[2] < 50:
+            barvaOcasu = [randint(0,128),randint(0,128),randint(0,128)]
+    
     for i in range(len(had)):
         barva = barvaOcasu
         if i == 0:
@@ -82,7 +91,7 @@ while True:
     smer = zjistiSmer(smer)
     
     if hadHaduje == False:
-        sense.show_message(str(skore))
+        sense.show_message(str(skore),0.3,[randint(0,250),randint(0,250),randint(0,250)])
         rozsvitSmailika()
         
         while hadHaduje == False:
@@ -110,7 +119,7 @@ while True:
         # Žere had potravu?
         if (not p) or (had[0] == p):
             if had[0] == p:
-                if (skore % 3) == 0 and skore != 0:
+                if (skore % 1) == 0 and skore != 0:
                     had.insert(len(had) -2, [had[len(had) -2][0],had[len(had) -2][1]])
                 skore = skore + 1
             p = vytvorPotravu(had,p)
