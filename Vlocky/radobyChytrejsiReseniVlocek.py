@@ -54,4 +54,4 @@ while True:
     l= l+1
     u= u+1
     p= p+1 
-    sleep(0.25)
+    sleep(0.10)

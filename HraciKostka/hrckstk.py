@@ -97,6 +97,6 @@ while True:
     soucetCisel = soucetCisel + viewed + 1
     pocetHodu = pocetHodu + 1
     prumer = soucetCisel / pocetHodu
-    print prumer
+    print (prumer)
     
   sense.set_pixels(states[viewed])
